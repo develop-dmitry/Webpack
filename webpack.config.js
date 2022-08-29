@@ -1,6 +1,7 @@
 const path = require("path");
-const pug = require("pug-plugin");
+const PugPlugin = require("pug-plugin");
 const fs = require("fs");
+const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 
 const PAGES_DIR = "./src/pages/";
 const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith(".pug"));
@@ -20,10 +21,17 @@ module.exports = {
     entry: entries,
 
     plugins: [
-        new pug({
+        new PugPlugin({
             pretty: true,
             extractCss: {
                 filename: 'assets/css/styles.css'
+            }
+        }),
+        new BrowserSyncPlugin({
+            host: "localhost",
+            port: 3000,
+            server: {
+                baseDir: ['dist']
             }
         })
     ],
@@ -34,7 +42,7 @@ module.exports = {
         rules: [
             {
                 test: /\.pug$/,
-                loader: pug.loader,
+                loader: PugPlugin.loader,
             },
             {
                 test: /\.(css|sass|scss)$/,
