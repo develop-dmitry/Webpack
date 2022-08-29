@@ -24,7 +24,7 @@ module.exports = {
         new PugPlugin({
             pretty: true,
             extractCss: {
-                filename: 'assets/css/styles.css'
+                filename: 'assets/css/[name].css'
             }
         }),
         new BrowserSyncPlugin({
